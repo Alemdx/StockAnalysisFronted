@@ -81,6 +81,7 @@
   const leaderShort = leader.slice(0, 105) + '...'
   const material = 'The Life of Material Dashboard'
   const small = 'Header with small subtitle'
+  const LSTM='对于学习率（learning_rate），通常来说，没有一个固定的最佳值，因为最佳值依赖于问题本身以及模型的其他参数。在许多情况下，一个好的初始学习率值是0.001。然而，我建议您尝试使用不同的学习率值并观察模型在验证集上的表现。您可以使用以下策略来选择合适的学习率：网格搜索：在一个预定义的范围内（如：0.0001、0.001、0.01、0.1）进行网格搜索，选择在验证集上性能最佳的学习率。指数衰减：开始时使用较高的学习率（例如，0.01），随着训练的进行逐渐降低学习率。在Keras中，您可以使用ExponentialDecay类实现学习率的指数衰减。'
 
   export default {
     data: () => ({
@@ -95,7 +96,7 @@
         blockquote: ['Quote', leader, 'blockquote'],
         'text--disabled': ['Muted Text', leaderShort, 'p'],
         'primary--text': ['Primary Text', leaderShort, 'p'],
-        'info--text': ['Info Text', leaderShort, 'p'],
+        'info--text': ['Info Text', LSTM, 'p'],
         'success--text': ['Success Text', leaderShort, 'p'],
         'warning--text': ['Warning Text', leaderShort, 'p'],
         'danger--text': ['Danger Text', leaderShort, 'p'],

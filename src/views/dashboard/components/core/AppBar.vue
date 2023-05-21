@@ -31,10 +31,11 @@
     <v-spacer />
 
     <v-text-field
-      :label="$t('search')"
+      :label="$t('输入股票代码')"
       color="secondary"
       hide-details
       style="max-width: 165px;"
+      v-model="code"
     >
       <template
         v-if="$vuetify.breakpoint.mdAndUp"
@@ -45,6 +46,7 @@
           elevation="1"
           fab
           small
+          @click="addStock()"
         >
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
@@ -60,7 +62,7 @@
       @click="exit()"
     >
      <v-icon dark>
-          mdi-minus
+          mdi-exit-to-app 
         </v-icon>
     </v-btn>
 
@@ -121,6 +123,7 @@
 
 <script>
 import authService from "@/Service/authservice"
+import UserService from "@/Service/userservice"
   // Components
   import { VHover, VListItem } from 'vuetify/lib'
 
@@ -171,6 +174,7 @@ import authService from "@/Service/authservice"
         'Another Notification',
         'Another one',
       ],
+      code:""
     }),
 
     computed: {
@@ -183,6 +187,9 @@ import authService from "@/Service/authservice"
       }),
     exit(){
       authService.logout()
+    },
+    addStock(){
+      UserService.addStock(this.code)
     }
     },
   }

@@ -75,16 +75,6 @@
       <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
       <div />
     </v-list>
-
-    <template v-slot:append>
-      <base-item
-        :item="{
-          title: $t('upgrade'),
-          icon: 'mdi-package-up',
-          to: '/upgrade',
-        }"
-      />
-    </template>
   </v-navigation-drawer>
 </template>
 
@@ -107,38 +97,38 @@
     data: () => ({
       items: [
         {
-          icon: 'mdi-view-dashboard',
-          title: 'dashboard',
+          icon: 'mdi-monitor-dashboard',
+          title: '市场监测',
           to: '/dashboard',
         },
         {
-          title: 'rtables',
-          icon: 'mdi-clipboard-outline',
+          title: '行情指数',
+          icon: 'mdi-finance',
+          to: '/maps/kindex',
+        },
+        {
+          title: '实验室',
+          icon: 'mdi-atom',
+          to: '/lab',
+        },
+        {
+          title: '我的关注',
+          icon: 'mdi-star',
           to: '/tables/regular-tables',
         },
         {
-          title: 'typography',
-          icon: 'mdi-format-font',
-          to: '/components/typography',
-        },
-        {
-          title: 'google',
-          icon: 'mdi-map-marker',
-          to: '/maps/google-maps',
-        },
-        {
-          title: 'notifications',
-          icon: 'mdi-bell',
-          to: '/notifications',
+          title: '文档',
+          icon: 'mdi-file-document-edit',
+          to: '/components/doc',
         },
         {
           icon: 'mdi-account',
-          title: 'user',
+          title: '个人信息',
           to: '/pages/user',
         },
         {
-          title: 'Login',
-          icon: 'mdi-chart-bubble',
+          title: '登录',
+          icon: 'mdi-login',
           to: '/login',
         },
       ],

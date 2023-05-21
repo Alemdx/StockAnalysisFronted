@@ -5,75 +5,14 @@
     tag="section"
   >
     <v-row>
-      <v-col
+      <!-- <v-col
         cols="12"
         lg="4"
       >
-        <base-material-chart-card
-          :data="emailsSubscriptionChart.data"
-          :options="emailsSubscriptionChart.options"
-          :responsive-options="emailsSubscriptionChart.responsiveOptions"
-          color="#E91E63"
-          hover-reveal
-          type="Bar"
-        >
-          <template v-slot:reveal-actions>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ attrs, on }">
-                <v-btn
-                  v-bind="attrs"
-                  color="info"
-                  icon
-                  v-on="on"
-                >
-                  <v-icon
-                    color="info"
-                  >
-                    mdi-refresh
-                  </v-icon>
-                </v-btn>
-              </template>
+  
+      </v-col> -->
 
-              <span>Refresh</span>
-            </v-tooltip>
-
-            <v-tooltip bottom>
-              <template v-slot:activator="{ attrs, on }">
-                <v-btn
-                  v-bind="attrs"
-                  light
-                  icon
-                  v-on="on"
-                >
-                  <v-icon>mdi-pencil</v-icon>
-                </v-btn>
-              </template>
-
-              <span>Change Date</span>
-            </v-tooltip>
-          </template>
-
-          <h4 class="card-title font-weight-light mt-2 ml-2">
-            Website Views
-          </h4>
-
-          <p class="d-inline-flex font-weight-light ml-2 mt-1">
-            Last Campaign Performance
-          </p>
-
-          <template v-slot:actions>
-            <v-icon
-              class="mr-1"
-              small
-            >
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
-          </template>
-        </base-material-chart-card>
-      </v-col>
-
-      <v-col
+      <!-- <v-col
         cols="12"
         lg="4"
       >
@@ -212,7 +151,7 @@
             <span class="caption grey--text font-weight-light">campaign sent 26 minutes ago</span>
           </template>
         </base-material-chart-card>
-      </v-col>
+      </v-col> -->
 
       <v-col
         cols="12"
@@ -221,11 +160,11 @@
       >
         <base-material-stats-card
           color="info"
-          icon="mdi-twitter"
-          title="Followers"
-          value="+245"
+          icon="mdi-currency-cny"
+          title="两市成交额"
+          v-model="volumn"
           sub-icon="mdi-clock"
-          sub-text="Just Updated"
+          sub-text="刚刚更新"
         />
       </v-col>
 
@@ -236,11 +175,11 @@
       >
         <base-material-stats-card
           color="primary"
-          icon="mdi-poll"
-          title="Website Visits"
-          value="75.521"
-          sub-icon="mdi-tag"
-          sub-text="Tracked from Google Analytics"
+          icon="mdi-currency-usd"
+          title="离岸人民币汇率"
+           v-model="currency"
+          sub-icon="mdi-clock"
+          sub-text="刚刚更新"
         />
       </v-col>
 
@@ -250,12 +189,12 @@
         lg="3"
       >
         <base-material-stats-card
-          color="success"
-          icon="mdi-store"
-          title="Revenue"
-          value="$ 34,245"
-          sub-icon="mdi-calendar"
-          sub-text="Last 24 Hours"
+          color="red"
+          icon="mdi-finance"
+          title="上证指数"
+          v-model="ShIndex"
+          sub-icon="mdi-clock"
+          sub-text="刚刚更新"
         />
       </v-col>
 
@@ -267,11 +206,10 @@
         <base-material-stats-card
           color="orange"
           icon="mdi-sofa"
-          title="Bookings"
-          value="184"
-          sub-icon="mdi-alert"
-          sub-icon-color="red"
-          sub-text="Get More Space..."
+          title="深圳成指"
+          v-model="ShIndex"
+          sub-icon="mdi-clock"
+          sub-text="刚刚更新"
         />
       </v-col>
 
@@ -296,6 +234,7 @@
             <v-data-table
               :headers="headers"
               :items="items"
+              :options="{itemsPerPage: 5}"
             />
           </v-card-text>
         </base-material-card>
@@ -305,87 +244,26 @@
         cols="12"
         md="6"
       >
-        <base-material-card class="px-5 py-3">
+                <base-material-card
+          color="info"
+          class="px-5 py-3"
+        >
           <template v-slot:heading>
-            <v-tabs
-              v-model="tabs"
-              background-color="transparent"
-              slider-color="white"
-            >
-              <span
-                class="subheading font-weight-light mx-3"
-                style="align-self: center"
-              >Tasks:</span>
-              <v-tab class="mr-3">
-                <v-icon class="mr-2">
-                  mdi-bug
-                </v-icon>
-                Bugs
-              </v-tab>
-              <v-tab class="mr-3">
-                <v-icon class="mr-2">
-                  mdi-code-tags
-                </v-icon>
-                Website
-              </v-tab>
-              <v-tab>
-                <v-icon class="mr-2">
-                  mdi-cloud
-                </v-icon>
-                Server
-              </v-tab>
-            </v-tabs>
+            <div class="display-2 font-weight-light">
+              热门股票
+            </div>
+
+            <div class="subtitle-1 font-weight-light">
+              当前热门
+            </div>
           </template>
-
-          <v-tabs-items
-            v-model="tabs"
-            class="transparent"
-          >
-            <v-tab-item
-              v-for="n in 3"
-              :key="n"
-            >
-              <v-card-text>
-                <template v-for="(task, i) in tasks[tabs]">
-                  <v-row
-                    :key="i"
-                    align="center"
-                  >
-                    <v-col cols="1">
-                      <v-list-item-action>
-                        <v-checkbox
-                          v-model="task.value"
-                          color="secondary"
-                        />
-                      </v-list-item-action>
-                    </v-col>
-
-                    <v-col cols="9">
-                      <div
-                        class="font-weight-light"
-                        v-text="task.text"
-                      />
-                    </v-col>
-
-                    <v-col
-                      cols="2"
-                      class="text-right"
-                    >
-                      <v-icon class="mx-1">
-                        mdi-pencil
-                      </v-icon>
-                      <v-icon
-                        color="error"
-                        class="mx-1"
-                      >
-                        mdi-close
-                      </v-icon>
-                    </v-col>
-                  </v-row>
-                </template>
-              </v-card-text>
-            </v-tab-item>
-          </v-tabs-items>
+          <v-card-text>
+            <v-data-table
+              :headers="headers1"
+              :items="items1"
+              :options="{itemsPerPage: 5}"
+            />
+          </v-card-text>
         </base-material-card>
       </v-col>
     </v-row>
@@ -393,152 +271,126 @@
 </template>
 
 <script>
+import DataService from "@/Service/dataservice"
   export default {
     name: 'DashboardDashboard',
 
     data () {
       return {
-        dailySalesChart: {
-          data: {
-            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-            series: [
-              [12, 17, 7, 17, 23, 18, 38],
-            ],
+        //先设置为静态数据
+        volumn:"1.13万亿",
+        currency:"6.92734",
+        ShIndex:"1.1379%",
+        headers1: [
+          {
+            sortable: false,
+            text: 'ID',
+            value: 'ID',
           },
-          options: {
-            lineSmooth: this.$chartist.Interpolation.cardinal({
-              tension: 0,
-            }),
-            low: 0,
-            high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-            chartPadding: {
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
-            },
+          {
+            sortable: false,
+            text: '股票代码',
+            value: 'code',
           },
-        },
-        dataCompletedTasksChart: {
-          data: {
-            labels: ['12am', '3pm', '6pm', '9pm', '12pm', '3am', '6am', '9am'],
-            series: [
-              [230, 750, 450, 300, 280, 240, 200, 190],
-            ],
-          },
-          options: {
-            lineSmooth: this.$chartist.Interpolation.cardinal({
-              tension: 0,
-            }),
-            low: 0,
-            high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-            chartPadding: {
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
-            },
-          },
-        },
-        emailsSubscriptionChart: {
-          data: {
-            labels: ['Ja', 'Fe', 'Ma', 'Ap', 'Mai', 'Ju', 'Jul', 'Au', 'Se', 'Oc', 'No', 'De'],
-            series: [
-              [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-
-            ],
-          },
-          options: {
-            axisX: {
-              showGrid: false,
-            },
-            low: 0,
-            high: 1000,
-            chartPadding: {
-              top: 0,
-              right: 5,
-              bottom: 0,
-              left: 0,
-            },
-          },
-          responsiveOptions: [
-            ['screen and (max-width: 640px)', {
-              seriesBarDistance: 5,
-              axisX: {
-                labelInterpolationFnc: function (value) {
-                  return value[0]
-                },
-              },
-            }],
-          ],
-        },
+          {
+            sortable: false,
+            text: '股票简称',
+            value: 'name',
+          }
+        ],
         headers: [
           {
             sortable: false,
             text: 'ID',
-            value: 'id',
+            value: 'ID',
           },
           {
             sortable: false,
-            text: 'Name',
+            text: '指数代码',
+            value: 'code',
+          },
+          {
+            sortable: false,
+            text: '指数简称',
             value: 'name',
-          },
-          {
-            sortable: false,
-            text: 'Salary',
-            value: 'salary',
-            align: 'right',
-          },
-          {
-            sortable: false,
-            text: 'Country',
-            value: 'country',
-            align: 'right',
-          },
-          {
-            sortable: false,
-            text: 'City',
-            value: 'city',
-            align: 'right',
-          },
+          }
         ],
-        items: [
-          {
-            id: 1,
-            name: 'Dakota Rice',
-            country: 'Niger',
-            city: 'Oud-Tunrhout',
-            salary: '$35,738',
-          },
-          {
-            id: 2,
-            name: 'Minerva Hooper',
-            country: 'Curaçao',
-            city: 'Sinaai-Waas',
-            salary: '$23,738',
-          },
-          {
-            id: 3,
-            name: 'Sage Rodriguez',
-            country: 'Netherlands',
-            city: 'Overland Park',
-            salary: '$56,142',
-          },
-          {
-            id: 4,
-            name: 'Philip Chanley',
-            country: 'Korea, South',
-            city: 'Gloucester',
-            salary: '$38,735',
-          },
-          {
-            id: 5,
-            name: 'Doris Greene',
-            country: 'Malawi',
-            city: 'Feldkirchen in Kārnten',
-            salary: '$63,542',
-          },
-        ],
+        items:[
+    {
+        "ID": 1,
+        "code": "885874",
+        "name": "云游戏"
+    },
+    {
+        "ID": 2,
+        "code": "885457",
+        "name": "手机游戏"
+    },
+    {
+        "ID": 3,
+        "code": "885603",
+        "name": "网络游戏"
+    },
+    {
+        "ID": 4,
+        "code": "886019",
+        "name": "AIGC概念"
+    },
+    {
+        "ID": 5,
+        "code": "886031",
+        "name": "ChatGPT概念"
+    },
+    {
+        "ID": 6,
+        "code": "885918",
+        "name": "快手概念"
+    },
+    {
+        "ID": 7,
+        "code": "885737",
+        "name": "电子竞技"
+    },
+    {
+        "ID": 8,
+        "code": "886017",
+        "name": "Web3.0"
+    },
+    {
+        "ID": 9,
+        "code": "885933",
+        "name": "NFT概念"
+    },
+    {
+        "ID": 10,
+        "code": "885950",
+        "name": "虚拟数字人"
+    }
+],
+
+        items1:[{'ID': 1, 'code': '600415', 'name': '小商品城'}, {'ID': 2, 'code': '300315', 'name': '掌趣科技'}, {'ID': 3, 'code': '603083',
+'name': '剑桥科技'}, {'ID': 4, 'code': '002747', 'name': '埃斯顿'}, {'ID': 5, 'code': '600757', 'name': '长江传媒'}, {'ID': 6,
+'code': '600072', 'name': '中船科技'}, {'ID': 7, 'code': '300418', 'name': '昆仑万维'}, {'ID': 8, 'code': '601858', 'name':
+'中国科传'}, {'ID': 9, 'code': '300058', 'name': '蓝色光标'}, {'ID': 10, 'code': '300678', 'name': '中科信息'}, {'ID': 11, 'code':
+'601360', 'name': '三六零'}, {'ID': 12, 'code': '300031', 'name': '宝通科技'}, {'ID': 13, 'code': '603019', 'name': '中科曙光'},
+{'ID': 14, 'code': '002315', 'name': '焦点科技'}, {'ID': 15, 'code': '002229', 'name': '鸿博股份'}, {'ID': 16, 'code': '002222',
+'name': '福晶科技'}, {'ID': 17, 'code': '601900', 'name': '南方传媒'}, {'ID': 18, 'code': '300624', 'name': '万兴科技'}, {'ID': 19,
+'code': '300085', 'name': '银之杰'}, {'ID': 20, 'code': '601949', 'name': '中国出版'}, {'ID': 21, 'code': '601012', 'name':
+'隆基绿能'}, {'ID': 22, 'code': '000977', 'name': '浪潮信息'}, {'ID': 23, 'code': '600629', 'name': '华建集团'}, {'ID': 24, 'code':
+'300459', 'name': '汤姆猫'}, {'ID': 25, 'code': '601390', 'name': '中国中铁'}, {'ID': 26, 'code': '600887', 'name': '伊利股份'},
+{'ID': 27, 'code': '300017', 'name': '网宿科技'}, {'ID': 28, 'code': '002230', 'name': '科大讯飞'}, {'ID': 29, 'code': '600229',
+'name': '城市传媒'}, {'ID': 30, 'code': '601318', 'name': '中国平安'}, {'ID': 31, 'code': '000065', 'name': '北方国际'}, {'ID': 32,
+'code': '601068', 'name': '中铝国际'}, {'ID': 33, 'code': '002077', 'name': '大港股份'}, {'ID': 34, 'code': '000625', 'name':
+'长安汽车'}, {'ID': 35, 'code': '002555', 'name': '三七互娱'}, {'ID': 36, 'code': '002594', 'name': '比亚迪'}, {'ID': 37, 'code':
+'601989', 'name': '中国重工'}, {'ID': 38, 'code': '601857', 'name': '中国石油'}, {'ID': 39, 'code': '300002', 'name': '神州泰岳'},
+{'ID': 40, 'code': '002338', 'name': '奥普光电'}, {'ID': 41, 'code': '000830', 'name': '鲁西化工'}, {'ID': 42, 'code': '601326',
+'name': '秦港股份'}, {'ID': 43, 'code': '601595', 'name': '上海电影'}, {'ID': 44, 'code': '002624', 'name': '完美世界'}, {'ID': 45,
+'code': '002558', 'name': '巨人网络'}, {'ID': 46, 'code': '600105', 'name': '永鼎股份'}, {'ID': 47, 'code': '603322', 'name':
+'超讯通信'}, {'ID': 48, 'code': '300308', 'name': '中际旭创'}, {'ID': 49, 'code': '002602', 'name': '世纪华通'}, {'ID': 50, 'code':
+'000540', 'name': '中天金融'}],
+
+
+
         tabs: 0,
         tasks: {
           0: [
@@ -591,11 +443,46 @@
         },
       }
     },
+    mounted() {
+    this.getVolunm(),
+    this.getCurrency(),
+    this.getShIndex(),
+    this.getHotNotion(),
+    this.getHotStock()
+  },
 
     methods: {
       complete (index) {
         this.list[index] = !this.list[index]
       },
+      getVolunm() {
+        DataService.getvolumn().then((result) => {
+          this.volumn = result.data;
+        });
+      },
+      getCurrency(){
+        DataService.getcurrency().then((result) => {
+          this.currency = result.data;
+        });
+      },
+      getShIndex(){
+          DataService.getShIndex().then((result) => {
+          this.ShIndex = result.data;
+        });
+      },
+      getHotNotion(){
+        DataService.getHotNotion().then((result) => {
+          this.items=result.data;
+        });
+
+      },
+      getHotStock(){
+        DataService.getHotStock().then((result) => {
+          this.items1=result.data;
+        });
+
+      }
+
     },
   }
 </script>

@@ -37,9 +37,9 @@ export default new Router({
           component: () => import('@/views/dashboard/pages/UserProfile'),
         },
         {
-          name: 'Notifications',
-          path: '/notifications',
-          component: () => import('@/views/dashboard/component/Notifications'),
+          name: 'Lab',
+          path: '/lab',
+          component: () => import('@/views/dashboard/component/Lab'),
         },
         {
           name: 'Icons',
@@ -47,9 +47,9 @@ export default new Router({
           component: () => import('@/views/dashboard/component/Icons'),
         },
         {
-          name: 'Typography',
-          path: 'components/typography',
-          component: () => import('@/views/dashboard/component/Typography'),
+          name: 'Doc',
+          path: 'components/doc',
+          component: () => import('@/views/dashboard/component/Doc'),
         },
         // Tables
         {
@@ -59,9 +59,9 @@ export default new Router({
         },
         // Maps
         {
-          name: 'Google Maps',
-          path: 'maps/google-maps',
-          component: () => import('@/views/dashboard/maps/GoogleMaps'),
+          name: '行情指数',
+          path: 'maps/kindex',
+          component: () => import('@/views/dashboard/maps/Kindex'),
         },
         // Upgrade
         {
@@ -75,19 +75,19 @@ export default new Router({
 })
 
 
-router.beforeEach((to, from, next) => {
-  let token = localStorage.getItem('token');
-  if (to.path != '/login' && !token&&to.path != '/register') {
-    alert("请先登录")
-    next({
-      path: '/login'
-    })
-  } else {
-    if (to.path == '/login' && token) {
-      //已经登录 不做操作 也可以跳转向其他的页面
-      next()
-    } else {     
-      next()
-    }
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   let token = localStorage.getItem('token');
+//   if (to.path != '/login' && !token&&to.path != '/register') {
+//     alert("请先登录")
+//     next({
+//       path: '/login'
+//     })
+//   } else {
+//     if (to.path == '/login' && token) {
+//       //已经登录 不做操作 也可以跳转向其他的页面
+//       next()
+//     } else {     
+//       next()
+//     }
+//   }
+// })

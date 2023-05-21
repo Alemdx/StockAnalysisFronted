@@ -1,188 +1,88 @@
 <template>
-  <v-container
-    id="regular-tables"
-    fluid
-    tag="section"
-  >
-    <base-v-component
-      heading="Simple Tables"
-      link="components/simple-tables"
-    />
-
-    <base-material-card
-      icon="mdi-clipboard-text"
-      title="Simple Table"
-      class="px-5 py-3"
-    >
-      <v-simple-table>
-        <thead>
-          <tr>
-            <th class="primary--text">
-              ID
-            </th>
-            <th class="primary--text">
-              Name
-            </th>
-            <th class="primary--text">
-              Country
-            </th>
-            <th class="primary--text">
-              City
-            </th>
-            <th class="text-right primary--text">
-              Salary
-            </th>
-          </tr>
-        </thead>
-
+  <v-container>
+    <v-data-table :headers="headers" :items="stocks" class="header-green">
+      <template v-slot:body="{ items }">
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Dakota Rice</td>
-            <td>Niger</td>
-            <td>Oud-Turnhout</td>
-            <td class="text-right">
-              $36,738
-            </td>
-          </tr>
-
-          <tr>
-            <td>2</td>
-            <td>Minverva Hooper</td>
-            <td>Curaçao</td>
-            <td>Sinaas-Waas</td>
-            <td class="text-right">
-              $23,789
-            </td>
-          </tr>
-
-          <tr>
-            <td>3</td>
-            <td>Sage Rodriguez</td>
-            <td>Netherlands</td>
-            <td>Baileux</td>
-            <td class="text-right">
-              $56,142
-            </td>
-          </tr>
-
-          <tr>
-            <td>4</td>
-            <td>Philip Chaney</td>
-            <td>Korea, South</td>
-            <td>Overland Park</td>
-            <td class="text-right">
-              $38,735
-            </td>
-          </tr>
-
-          <tr>
-            <td>5</td>
-            <td>Doris Greene</td>
-            <td>Malawi</td>
-            <td>Feldkirchen in Kärnten</td>
-            <td class="text-right">
-              $63,542
-            </td>
-          </tr>
-
-          <tr>
-            <td>6</td>
-            <td>Mason Porter</td>
-            <td>Chile</td>
-            <td>Gloucester</td>
-            <td class="text-right">
-              $78,615
+          <tr
+            v-for="(item, index) in items"
+            :key="item.stockCode"
+            :class="index % 2 === 0 ? 'red--text' : 'green--text'"
+          >
+            <td>{{ item.stockCode }} - {{ item.stockName }}</td>
+            <td>{{ item.marketStatus }}</td>
+            <td>{{ item.currentPrice }}</td>
+            <td>{{ item.high52w }}</td>
+            <td>{{ item.low52w }}</td>
+            <td>{{ (item.volume / 10000).toFixed(2) }}</td>
+            <td>{{ (item.marketCapital / 100000000).toFixed(2) }}</td>
+            <td>{{ item.turnoverRate }}%</td>
+            <td>{{ item.amplitude }}%</td>
+            <td>
+              <v-btn
+                small
+                class="ml-1"
+                min-width="-1"
+                text
+                @click="deleteItem(index)"
+              >
+                <v-icon dark>
+                  mdi-minus
+                </v-icon>
+              </v-btn>
             </td>
           </tr>
         </tbody>
-      </v-simple-table>
-    </base-material-card>
-
-    <div class="py-3" />
-
-    <base-material-card
-      color="success"
-      dark
-      icon="mdi-clipboard-plus"
-      title="Table on Dark Background"
-      class="px-5 py-3"
-    >
-      <v-simple-table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Country</th>
-            <th>City</th>
-            <th class="text-right">
-              Salary
-            </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Dakota Rice</td>
-            <td>Niger</td>
-            <td>Oud-Turnhout</td>
-            <td class="text-right">
-              $36,738
-            </td>
-          </tr>
-
-          <tr>
-            <td>2</td>
-            <td>Minverva Hooper</td>
-            <td>Curaçao</td>
-            <td>Sinaas-Waas</td>
-            <td class="text-right">
-              $23,789
-            </td>
-          </tr>
-
-          <tr>
-            <td>3</td>
-            <td>Sage Rodriguez</td>
-            <td>Netherlands</td>
-            <td>Baileux</td>
-            <td class="text-right">
-              $56,142
-            </td>
-          </tr>
-
-          <tr>
-            <td>4</td>
-            <td>Philip Chaney</td>
-            <td>Korea, South</td>
-            <td>Overland Park</td>
-            <td class="text-right">
-              $38,735
-            </td>
-          </tr>
-
-          <tr>
-            <td>5</td>
-            <td>Doris Greene</td>
-            <td>Malawi</td>
-            <td>Feldkirchen in Kärnten</td>
-            <td class="text-right">
-              $63,542
-            </td>
-          </tr>
-
-          <tr>
-            <td>6</td>
-            <td>Mason Porter</td>
-            <td>Chile</td>
-            <td>Gloucester</td>
-            <td class="text-right">
-              $78,615
-            </td>
-          </tr>
-        </tbody>
-      </v-simple-table>
-    </base-material-card>
+      </template>
+    </v-data-table>
   </v-container>
 </template>
+
+<script>
+import UserService from "@/Service/userservice";
+export default {
+  data() {
+    return {
+      headers: [
+        { text: '股票代码 - 名称', value: 'stockCode', sortable: false },
+        { text: '市场状态', value: 'marketStatus', sortable: false },
+        { text: '当前价格（元）', value: 'currentPrice', sortable: false },
+        { text: '52 周最高（元）', value: 'high52w', sortable: false },
+        { text: '52 周最低（元）', value: 'low52w', sortable: false },
+        { text: '成交量（万手）', value: 'volume', sortable: false },
+        { text: '市值（亿）', value: 'marketCapital', sortable: true },
+        { text: '换手率', value: 'turnoverRate', sortable: true },
+        { text: '振幅', value: 'amplitude', sortable: true },
+        { text: '取消关注', value: 'actions', sortable: false },
+      ],
+      stocks: [],
+    };
+  },
+  async mounted() {
+    await this.initData();
+  },
+  methods: {
+    async initData() {
+      this.stocks = await UserService.getStock();
+    },
+    async deleteItem(index) {
+    const stockCode = this.stocks[index].stockCode;
+    try {
+      await UserService.deleteStock(stockCode);
+      alert(stockCode)
+      this.stocks.splice(index, 1);
+    } catch (error) {
+      console.error('Failed to delete stock:', error);
+    }
+  },
+  },
+};
+</script>
+
+<style scoped>
+.header-green >>> thead th {
+  font-weight: bold;
+  font-size: 1.2em;
+  /* background-color: #4caf50; */
+  color: white;
+}
+</style>
